@@ -3,7 +3,7 @@
 Snippits and contribution by Blaquen
 
 # 1.0.6 12/7/2020
-Started development to integrate this addon into the new SHadowlands Expansion.
+Started development to integrate this addon into the new Shadowlands Expansion.
 
 # 1.0.5 7/03/2020
 Updated modules for new patch
