@@ -1,5 +1,6 @@
 ## Facebook Bot 1.0.1
 # Designed, Maintained and updated by Gruzzly
+# Executable included for those who wish to use it.
 
 # 1.0.1 7/13/2020
 Improved code readability

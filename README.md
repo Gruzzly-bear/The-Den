@@ -1,6 +1,6 @@
 # The Den
 
-This repo is full of projects I have taken on personally or as a request for people.
+This repo is full of projects I have taken on personally or as a request for people. It includes websites I have created to further test my knowledge, Bots that I have made for friends and family, and a few misc. items here and there. Feel free to look around.
 
 # Quick Links
 - [WoW Dwarven chat addon](https://github.com/Gruzzly-bear/The-Den/tree/master/DwarvenChat)
