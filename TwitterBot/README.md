@@ -2,6 +2,10 @@
 # Designed, Maintained and updated by Gruzzly
 # Executable included for those who wish to use it.
 
+# 1.0.2 07/31/2021
+Refactored code
+Updated to fit the updated Tweepy module
+
 # 1.0.1 7/13/2020
 Improved code readability
 
