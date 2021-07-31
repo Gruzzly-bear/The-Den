@@ -30,12 +30,9 @@ sleep_time = int(config.get("settings", "sleep")) # sleep for 1 second by defaul
 - Once you have that, make sure you link it to a phone number.
 - This needs to be done in order to create an application on twitter's API.
 - After you have a phone number linked and your account looking good, head to https://apps.twitter.com
-- Click on Create new app.
-- Give it a name. Most of this information are just placeholders.
-- Give it a small description.
-- Set the website. You can just use a placeholder for it like this - http://website.com/
-- Tick yes for developer agreement.
-- After it is created, goto the key's and access token tab at the top.
+- Follow the instructions to set up a developer account.
+- When you have access go into your created app
+- set it to read & Write
 - Copy the Consumer key and the consumer secret.
 - Goto access token. Click generate new.
 - Copy both of those tokens.
