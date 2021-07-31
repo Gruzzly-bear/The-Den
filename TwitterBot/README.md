@@ -22,13 +22,14 @@ consumer_secret=config.get('settings','consumer_secret')
 sleep_time = int(config.get("settings", "sleep")) # sleep for 1 second by default
 ```
 ## How to use
+ ### UPDATE ###
+ Now you must apply to have your twitter account be able to access the API. It's a rather straightforward process.
+
 
 - The first thing you will need is a twitter account.
 - Once you have that, make sure you link it to a phone number.
 - This needs to be done in order to create an application on twitter's API.
 - After you have a phone number linked and your account looking good, head to https://apps.twitter.com
-- ### UPDATE ###
-- Now you must apply to have your twitter account be able to access the API. It's a rather straightforward process.
 - Click on Create new app.
 - Give it a name. Most of this information are just placeholders.
 - Give it a small description.
