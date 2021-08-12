@@ -1,3 +1,3 @@
-﻿List your tweets here!
+List your tweets here!
 Remember there is a 140 char limit!
 Each tweet is one line!
