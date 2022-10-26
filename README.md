@@ -191,7 +191,7 @@ while True:
 
 
 
-<! -- ### Contact and links
+<! -- Contact and links
 - [Github](https://github.com/Gruzzly-bear)
 - [Email](mailto:MB.Bowen@outlook.com?subject=Hey%20There!)
 - [Website](https://gruzzly.co) -->
