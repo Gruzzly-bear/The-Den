@@ -29,155 +29,227 @@ This is an application for android that I created with Dart and Flutter for my p
 
 # Flutter Portfolio App
 
-### What is it?
-An android application created for my portfolio.
+<details>
+    <summary>
+    What is it?
+    </summary>
 
-#### The hierarchy
+<p>
+An android application created for my portfolio.
+</p>
+
+The hierarchy
+---
+
 ```dart
-          children: [
-            Image.asset(
-              'assets/images/Gruzzly.png',
-              width: 550,
-              height: 100,
-              fit: BoxFit.fitWidth,
-            ),
-            buttonSection,
-            space,
-            Image.asset(
-              'assets/images/me.png',
-              width: 250,
-              height: 250,
-            ),
-            textSection,
-            newtextSection,
-            newtextSections
-          ],
- ```
+            children: [
+                Image.asset(
+                'assets/images/Gruzzly.png',
+                width: 550,
+                height: 100,
+                fit: BoxFit.fitWidth,
+                ),
+                buttonSection,
+                space,
+                Image.asset(
+                'assets/images/me.png',
+                width: 250,
+                height: 250,
+                ),
+                textSection,
+                newtextSection,
+                newtextSections
+            ],
+```
+</details>
 
 # Dwarven Chat
 
-### What is it?
+<details>
+    <summary>
+    What is it?
+    </summary>
+
+<p>
 This addon auto translates your input text and outputs modified text that resembles a dwarven accent.
-#### For example:
+</p>
+
+For example:
+---
+
+<p>
+
 ``` What are you saying? I can't hear you! ``` <br/>
+
 becomes <br/>
+
 ``` What're ye sayin'? I cannae hear ye! ``` <br/>
+
 This happens as soon as you press enter. It is very fast, and fluid.
 
-### How does it work?
-It creates the in game slash function on load. It creates local databases to pull and replace predefined text from.
-#### Creating the slash command for ingame use.
-```lua
-function DwarvenChat_OnLoad()
+</p>
 
-	
-	SlashCmdList["DWARVENCHATTOGGLE"] = dwarven_toggle;
-	SLASH_DWARVENCHATTOGGLE1 = "/dwarvenchat";
-	SLASH_DWARVENCHATTOGGLE2 = "/dchat";
-	SlashCmdList["DSAY"] = dwarven_say;
- ```
+How does it work?
+---
 
-#### Local Dwarven chat database creation for replacing words.
+<p> It creates the in game slash function on load. It creates local databases to pull and replace predefined text from. </p>
+
+Creating the slash command for ingame use.
+---
+
 ```lua
-	local dwarvenChat_ReplaceDB = {
-	{o={"^hello","^hiya","^hi there", "^hey"}, r={"Well met","E'llo"}},
-	{o={"no", "nah"}, r={"nae"}},
-	{o={"^no", "^nah"}, r={"^nae"}},
-	{o={"the"}, r={"tha"}},
-	}
+    function DwarvenChat_OnLoad()
+
+        
+        SlashCmdList["DWARVENCHATTOGGLE"] = dwarven_toggle;
+        SLASH_DWARVENCHATTOGGLE1 = "/dwarvenchat";
+        SLASH_DWARVENCHATTOGGLE2 = "/dchat";
+        SlashCmdList["DSAY"] = dwarven_say;
 ```
-#### Hooking of blizzard function
+
+Local Dwarven chat database creation for replacing words.
+---
+
 ```lua
-local dwarvenChat_SendChatMessage = SendChatMessage;
+        local dwarvenChat_ReplaceDB = {
+        {o={"^hello","^hiya","^hi there", "^hey"}, r={"Well met","E'llo"}},
+        {o={"no", "nah"}, r={"nae"}},
+        {o={"^no", "^nah"}, r={"^nae"}},
+        {o={"the"}, r={"tha"}},
+        }
 ```
+
+Hooking of blizzard function
+---
+
+```lua
+    local dwarvenChat_SendChatMessage = SendChatMessage;
+```
+</details>
 
 # IOS Pythonista dropbox sync scripts.
+<details>
+    <summary>
+    What is it?
+    </summary>
 
-### What is it?
-It is a set of scripts used to sync to and from Pythonista on IOS.
-#### How does it work?
-It uses your credentials from your dropbox API and then makes sure you can actually upload to it. After doing that, it will check your dropbox for any conflicts. If there is any, it will ask you how you want to handle it. Then it will push your file sto you drop box.
+    
+
+<p>It is a set of scripts used to sync to and from Pythonista on IOS.</p>
+
+How does it work?
+---
+
+<p>It uses your credentials from your dropbox API and then makes sure you can actually upload to it. After doing that, it will check your dropbox for any conflicts. If there is any, it will ask you how you want to handle it. Then it will push your file sto you drop box.
 It will run through the same thing on the way back when you sync from your drop box.
-#### Comparing of files locally and in the dropbox.
-```python
-for file in folder_metadata['contents']:
-		dropbox_path = file['path'][1:]
-		file_name = file['path'].split('/')[-1]
-		
-		file_ext = os.path.splitext(file_name)[1]
-		
-		if file['is_dir'] == False and (file_ext in config['file_extensions'] or [m.group(0) for l in config['file_extensions'] 
-		for m in [re.match('[\.]?\*',l)] if m]):
+</p>
 
-			if not os.path.exists(os.path.join(PYTHONISTA_DOC_DIR, dropbox_path)):
- ```
-#### Creation of dropbox config.
+Comparing of files locally and in the dropbox.
+---
+
 ```python
-def setup_configuration():
-	
-	if not os.path.exists(SYNC_STATE_FOLDER):
-		os.mkdir(SYNC_STATE_FOLDER)
-	if os.path.exists(CONFIG_FILEPATH):
-		with open(CONFIG_FILEPATH, 'r') as config_file:
-			config = json.load(config_file)
-	else:
-		logging.log(FINE, 'Configuration file missing')
-		config = {}
-		
-		logging.info('Insert your App key and secret.')
-		
-		config['APP_KEY'] = input('''Enter your app key
-''')
-		config['APP_SECRET'] = input('''Enter your app secret
-''')
-		
-		config['ACCESS_TYPE'] = 'app_folder'
-		
-		
-		write_configuration(config)
-			
-	return config
-  ```
+    for file in folder_metadata['contents']:
+        dropbox_path = file['path'][1:]
+        file_name = file['path'].split('/')[-1]
+            
+        file_ext = os.path.splitext(file_name)[1]
+            
+        if file['is_dir'] --- False and (file_ext in config['file_extensions'] or [m.group(0) for l in config['file_extensions'] 
+        for m in [re.match('[\.]?\*',l)] if m]):
+
+        if not os.path.exists(os.path.join(PYTHONISTA_DOC_DIR, dropbox_path)):
+```
+
+Creation of dropbox config.
+---
+
+```python
+    def setup_configuration():
+        
+        if not os.path.exists(SYNC_STATE_FOLDER):
+            os.mkdir(SYNC_STATE_FOLDER)
+        if os.path.exists(CONFIG_FILEPATH):
+            with open(CONFIG_FILEPATH, 'r') as config_file:
+                config = json.load(config_file)
+        else:
+            logging.log(FINE, 'Configuration file missing')
+            config = {}
+            
+            logging.info('Insert your App key and secret.')
+            
+            config['APP_KEY'] = input('''Enter your app key
+    ''')
+            config['APP_SECRET'] = input('''Enter your app secret
+    ''')
+            
+            config['ACCESS_TYPE'] = 'app_folder'
+            
+            
+            write_configuration(config)
+                
+        return config
+```
+
+</details>
+
 # Twitter Bot
+<details>
+    <summary>What is it?
+    </summary>
 
-### What is it?
-This small script will automatically post a line of text or an image from a folder directly onto your twitter account.<br/>
-It pulls credentials and settings from a config.
+<p>This small script will automatically post a line of text or an image from a folder directly onto your twitter account.<br/>
+It pulls credentials and settings from a config.</p>
 
-#### How was it made?
+How was it made?
+---
+
 I used the python Tweepy module for most of it. I also used Config Parser. Config parser is great, because you can load information into the script itself after it's been compiled into an executable. I also used sleep so that it would repeat the entire process of posting after a short delay.
 
-#### ConfigParser Example
+ConfigParser Example
+---
+
 ```python
 consumer_key=config.get('settings','consumer_key')
 consumer_secret=config.get('settings','consumer_secret')
 ```
-#### Sleep Example
+
+Sleep Example
+---
+
 ```python
 sleep_time = int(config.get("settings", "sleep")) # sleep for 1 second by default
 ```
+
+</details>
+
 # Facebook Bot
 
-### What is it?
-This small script will automatically post a line of text or an image from a folder directly onto your facebook page/wall.<br/>
-It pulls credentials and settings from a config.
+<details>
+    <summary>What is it?
+    </summary>
+    This small script will automatically post a line of text or an image from a folder directly onto your facebook page/wall.<br/>
+    It pulls credentials and settings from a config.
 
-#### How does it work?
-I used the python module facepy to integrate the facebook API and the script together. Then I used ConfigParser to pull information from a settings config into the script.
-Then I used random and graph to post the advertisement/text pulled randomly from the file TO facebook.
+How does it work?
+---
+    I used the python module facepy to integrate the facebook API and the script together. Then I used ConfigParser to pull information from a settings config into the script.
+    Then I used random and graph to post the advertisement/text pulled randomly from the file TO facebook.
 
-#### ConfigParser Example
+ConfigParser Example
+---
 ```python
-config.read(os.path.join(os.path.dirname(__file__),"settings.cfg"))
-ACCESS_TOKEN=config.get('settings','ACCESS_TOKEN')
+    config.read(os.path.join(os.path.dirname(__file__),"settings.cfg"))
+    ACCESS_TOKEN=config.get('settings','ACCESS_TOKEN')
 ```
 
-#### Graph Example
+Graph Example
+---
 ```python
-while True:
-	graph = GraphAPI(ACCESS_TOKEN)
-	graph.post('me/feed', message=(random.choice(list(open('text.txt')))))
- ```
+    while True:
+        graph = GraphAPI(ACCESS_TOKEN)
+        graph.post('me/feed', message=(random.choice(list(open('text.txt')))))
+```
+</details>
 
 
 
