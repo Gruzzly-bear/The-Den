@@ -151,7 +151,9 @@ Comparing of files locally and in the dropbox.
             
         file_ext = os.path.splitext(file_name)[1]
             
-        if file['is_dir'] --- False and (file_ext in config['file_extensions'] or [m.group(0) for l in config['file_extensions'] 
+        if file['is_dir'] 
+        --- False and (file_ext in config['file_extensions'] 
+        or [m.group(0) for l in config['file_extensions'] 
         for m in [re.match('[\.]?\*',l)] if m]):
 
         if not os.path.exists(os.path.join(PYTHONISTA_DOC_DIR, dropbox_path)):
