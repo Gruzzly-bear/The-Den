@@ -1,102 +1,94 @@
 -- Currently maintained, designed and updated by Gruzzly
 
--- Create our LibDataBroker Object
-local ldb = LibStub:GetLibrary("LibDataBroker-1.1");
-local dcBroker = ldb:NewDataObject("DwarvenChat", { 
-	type = "data source",
-	label = "Dwarven Chat", 
-	icon = "Interface\\AddOns\\DwarvenChat\\icon",
-	text = "--"
-	}
-	)
+-- Library Check
+local ldb = LibStub:GetLibrary("LibDataBroker-1.1", true)
+if not ldb then
+    error("LibDataBroker-1.1 not found.")
+end
 
+-- Create our LibDataBroker Object
+local dcBroker = ldb:NewDataObject("DwarvenChat", {
+    type = "data source",
+    label = "Dwarven Chat",
+    icon = "Interface\\AddOns\\DwarvenChat\\icon",
+    text = "--"
+})
 
 -- Event Handler
 local function OnEvent(self, event, addOnName)
-	if event == "ADDON_LOADED" and addOnName:lower() == "dwarvenchat" then
+    if event == "ADDON_LOADED" and addOnName:lower() == "dwarvenchat" then
+        -- Build our slash commands
+        DwarvenChat_OnLoad()
 
-		-- Build our slash commands
-		DwarvenChat_OnLoad()
+        -- set saved variables for first-time users		
+        if dwarven_talk_on == nil then
+            dwarven_talk_on = 1;
+        end
+        if dwarven_strict_on == nil then
+            dwarven_strict_on = 0;
+        end
 
-		-- set saved variables for first time users		
-		if dwarven_talk_on == nil then
-   			dwarven_talk_on = 1;
-  		end
-  		if dwarven_strict_on == nil then
-   			dwarven_strict_on = 0; 
-  		end
+        -- Get our speak tables
+        if speakDB == nil then
+            CreateSpeakDB()
+        end
 
-		--  Get our speak tables
-		if speakDB == nil then
-			CreateSpeakDB()
-		end 
-			
+        -- set the status text of our LDB object
+        dcBroker.text = dwarven_talk_on == 1 and "|c0000FF00ON |r" or "|c00FF0000OFF|r"
+    elseif event == "PLAYER_LOGOUT" then
 
-		-- set the status text of our LDB object
-		if (dwarven_talk_on == 1) then
-			dcBroker.text = "|c0000FF00ON |r"
-		else
-			dcBroker.text = "|c00FF0000OFF|r"
-		end		
- 	elseif event == "PLAYER_LOGOUT" then
-		
-	end
-	OnEvent= nil;
-	self:SetScript("OnEvent",nil);
+    end
+    OnEvent = nil;
+    self:SetScript("OnEvent", nil);
 end
 
 -- Create our frame
 local dcFrame = CreateFrame("FRAME", "DwarvenChat");
 dcFrame:RegisterEvent("ADDON_LOADED");
-dcFrame:RegisterEvent("PLAYER_LOGOUT"); 
+dcFrame:RegisterEvent("PLAYER_LOGOUT");
 dcFrame:SetScript("OnEvent", OnEvent);
 
-
 function DwarvenChat_OnLoad()
+    -- Create our slash commands
+    SlashCmdList["DWARVENCHATTOGGLE"] = dwarven_toggle;
+    SLASH_DWARVENCHATTOGGLE1 = "/dwarvenchat";
+    SLASH_DWARVENCHATTOGGLE2 = "/dchat";
+    SlashCmdList["DSAY"] = dwarven_say;
+    SLASH_DSAY1 = "/ds";
+    SLASH_DSAY2 = "/dsay";
+    SlashCmdList["DYELL"] = dwarven_yell;
+    SLASH_DYELL1 = "/dy";
+    SLASH_DYELL2 = "/dyell";
+    SlashCmdList["DPARTY"] = dwarven_party;
+    SLASH_DPARTY1 = "/dp";
+    SLASH_DPARTY2 = "/dparty";
+    SlashCmdList["DGUILD"] = dwarven_guild;
+    SLASH_DGUILD1 = "/dg";
+    SLASH_DGUILD2 = "/dguild";
+    SlashCmdList["DSTRICTTOGGLE"] = dwarven_strict;
+    SLASH_DSTRICTTOGGLE1 = "/dstrict";
 
-	-- Create our slash commands
-	SlashCmdList["DWARVENCHATTOGGLE"] = dwarven_toggle;
-	SLASH_DWARVENCHATTOGGLE1 = "/dwarvenchat";
-	SLASH_DWARVENCHATTOGGLE2 = "/dchat";
-	SlashCmdList["DSAY"] = dwarven_say;
-	SLASH_DSAY1 = "/ds";
-	SLASH_DSAY2 = "/dsay";
-	SlashCmdList["DYELL"] = dwarven_yell;
-	SLASH_DYELL1 = "/dy";
-	SLASH_DYELL2 = "/dyell";
-	SlashCmdList["DPARTY"] = dwarven_party;
-	SLASH_DPARTY1 = "/dp";
-	SLASH_DPARTY2 = "/dparty";
-	SlashCmdList["DGUILD"] = dwarven_guild;
-	SLASH_DGUILD1 = "/dg";
-	SLASH_DGUILD2 = "/dguild";
-	SlashCmdList["DSTRICTTOGGLE"] = dwarven_strict;
-	SLASH_DSTRICTTOGGLE1 = "/dstrict";
-
-	-- announce addon load
-	if( DEFAULT_CHAT_FRAME ) then
-		DEFAULT_CHAT_FRAME:AddMessage("Dwarven Accent loaded!");
-	end
+    -- announce addon load
+    if (DEFAULT_CHAT_FRAME) then
+        DEFAULT_CHAT_FRAME:AddMessage("Dwarven Accent loaded!");
+    end
 end
-
 
 -- Blizzard function to be hooked
 local dwarvenChat_SendChatMessage = SendChatMessage;
 
 -- Wintertime and Dwarf Accent conflict.
--- If we detect Wintertime we'll note the channel and stay off of it
+-- If we detect Wintertime, we'll note the channel and stay off of it
 local wtID, wtName = GetChannelName("WinterTimeGlobal")
 
-function SendChatMessage(msg, system, language, chatnumber) 
-	--DEFAULT_CHAT_FRAME:AddMessage("Channel ID: "..chatnumber.." message: "..msg.." ChannelName: "..wtID .. ", " .. wtName);
-    if (dwarven_talk_on == 1 and msg ~= "" and (string.find(msg, "%[") == nil)) then 
-	if ( string.find(msg, "^%/") == nil ) and (chatnumber ~= wtID) then
-          msg = dwarvenchat(msg);
-	end
+function SendChatMessage(msg, system, language, chatnumber)
+    if (dwarven_talk_on == 1 and msg ~= "" and (string.find(msg, "%[") == nil)) then
+        if (string.find(msg, "^%/") == nil) and (chatnumber ~= wtID) then
+            msg = dwarvenchat(msg);
+        end
     end
     dwarvenChat_SendChatMessage(msg, system, language, chatnumber);
-end 
-
+end
 
 function prepend_dwarven(inputString)
 	local phrase_array = speakDB["dwarvenChat_PrependDB"]

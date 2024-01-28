@@ -5,7 +5,7 @@
 ## Author: gruzzly
 ## OptionalDeps:
 ## Dependencies:
-## SavedVariablesPerCharacter: dwarven_chat_on, Dwarven_strict_on
+## SavedVariablesPerCharacter: dwarven_talk_on, dwarven_strict_on
 ## SavedVariables: speakDB
 
 
