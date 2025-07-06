@@ -1,17 +1,10 @@
-## Interface: 80300
-## Title: Dwarven Chat | V1.0.5 
-## Version: v1.0.5
-## Notes: Adds a dwarven accent. Type: /dchat for options
-## Author: gruzzly
-## OptionalDeps:
-## Dependencies:
-## SavedVariablesPerCharacter: dwarven_talk_on, dwarven_strict_on
-## SavedVariables: speakDB
+## Interface: 100207
+## Title: |cffA52A2ADwarven Chat|r
+## Author: Gruzzly 
+## Notes: Speak like a proper dwarf! Now with a settings panel! Type /dchat to open.
+## Version: 3.0
+## Dependencies: LibDataBroker-1.1, Ace3
+## SavedVariables: DwarvenChatDB
 
-
-Libs\LibStub\LibStub.lua
-Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
-Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
-
-
+options.lua
 DwarvenChat.lua
